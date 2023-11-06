@@ -1,0 +1,73 @@
+﻿@page
+@model AbbyWeb.Pages.Category.CategoryModel
+@*
+@if (TempData["success"] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]')
+    </script>
+}
+@if (TempData["delete"] != null)
+{
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script type="text/javascript">
+       Swal.fire({
+  icon: 'warning',
+  title: 'Delete',
+  text: 'The Data will be Deleted Permanently!'
+})
+       </script>
+}
+
+We can do it like above when not using partial view
+*@
+<partial name="_Notification" />
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6">
+            <h1>Categories</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-page="create" class="btn btn-primary">Create Record</a>
+        </div>
+    </div>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Display Order</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var obj in Model.Category)
+            {
+                <tr>
+                    <td>
+                        @obj.Name
+                    </td>
+                    <td>
+                        @obj.DisplayOrder
+                    </td>
+                    <td>
+                        <div class="btn-group w-50">
+                        <a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>&nbsp;&nbsp;&nbsp;
+                        <a asp-page="Delete" asp-route-id="@obj.Id"  class="btn btn-danger">
+                            <i class="bi bi-archive"></i>
+                        </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
